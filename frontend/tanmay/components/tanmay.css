@@ -542,3 +542,26 @@
   border-color: var(--primary-500);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
+
+/* Print Styles for Official Gov Letterhead */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .gov-print-document, .gov-print-document * {
+    visibility: visible;
+  }
+  .gov-print-document {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  .modal-backdrop, .btn, .tanmay-nav, header, footer {
+    display: none !important;
+  }
+}
