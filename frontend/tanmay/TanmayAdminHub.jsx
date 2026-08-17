@@ -12,12 +12,14 @@ import AdminConfigView from './views/AdminConfigView';
 import BasketManagerView from './views/BasketManagerView';
 import DiagnosticDashboardView from './views/DiagnosticDashboardView';
 import WhatIfDisruptorView from './views/WhatIfDisruptorView';
+import SahayakBroadcastHubView from './views/SahayakBroadcastHubView';
 import { useSolverControls } from './hooks/useSolverControls';
 import { useWhatIfSimulation } from './hooks/useWhatIfSimulation';
+import { Smartphone } from 'lucide-react';
 import './components/tanmay.css';
 
 export default function TanmayAdminHub({ timetable, onTimetableUpdated }) {
-  const [adminSubTab, setAdminSubTab] = useState('config'); // 'config' | 'baskets' | 'diagnostics' | 'whatif'
+  const [adminSubTab, setAdminSubTab] = useState('config'); // 'config' | 'baskets' | 'diagnostics' | 'whatif' | 'sahayak'
 
   const solverControls = useSolverControls(onTimetableUpdated);
   const simulationControls = useWhatIfSimulation(onTimetableUpdated);
@@ -57,6 +59,19 @@ export default function TanmayAdminHub({ timetable, onTimetableUpdated }) {
           <AlertTriangle size={16} />
           <span>What-If Disruptor Console</span>
         </button>
+
+        <button
+          className={`tanmay-nav-btn ${adminSubTab === 'sahayak' ? 'active' : ''}`}
+          onClick={() => setAdminSubTab('sahayak')}
+          style={{
+            background: adminSubTab === 'sahayak' ? '#ecfdf5' : undefined,
+            borderColor: adminSubTab === 'sahayak' ? '#a7f3d0' : undefined,
+            color: adminSubTab === 'sahayak' ? '#065f46' : undefined
+          }}
+        >
+          <Smartphone size={16} color="#10b981" />
+          <span>📱 Sahayak & WhatsApp Hub</span>
+        </button>
       </div>
 
       {/* Sub-Tab View Switching */}
@@ -79,6 +94,13 @@ export default function TanmayAdminHub({ timetable, onTimetableUpdated }) {
 
       {adminSubTab === 'whatif' && (
         <WhatIfDisruptorView
+          simulationControls={simulationControls}
+          onTimetableUpdated={onTimetableUpdated}
+        />
+      )}
+
+      {adminSubTab === 'sahayak' && (
+        <SahayakBroadcastHubView
           simulationControls={simulationControls}
           onTimetableUpdated={onTimetableUpdated}
         />
