@@ -1,4 +1,5 @@
-﻿import { loadSeedData, getActiveTimetableState, setActiveTimetableState } from '../config/db.js';
+﻿import mongoose from 'mongoose';
+import { loadSeedData, getActiveTimetableState, setActiveTimetableState } from '../config/db.js';
 import { normalizeCurriculum } from '../engine/normalizer.js';
 import { buildConflictMatrix } from '../engine/conflictMatrix.js';
 import { solveTimetable } from '../engine/constraintSolver.js';
@@ -6,6 +7,7 @@ import { validateTimetable } from '../engine/validator.js';
 import { calculateQualityScore } from '../engine/scorer.js';
 import { simulateDisruption } from '../simulation/whatIfEngine.js';
 import { generateAIExplanation } from '../ai/diagnosticDoctor.js';
+import { TimetableModel } from '../models/TimetableModel.js';
 
 let latestSimulatedTimetable = null;
 
@@ -39,7 +41,7 @@ export async function generateTimetableHandler(req, res) {
       isSimulated: false
     };
 
-    // 6. Generate AI Diagnostics
+    // 6. Generate AI Diagnostics (Groq LLM or Rule Synthesizer)
     const aiReport = await generateAIExplanation(draftTimetable);
     const completeTimetable = {
       ...draftTimetable,
@@ -47,8 +49,18 @@ export async function generateTimetableHandler(req, res) {
       recommendations: aiReport.recommendations
     };
 
-    // Save as active timetable
+    // Save in Memory
     setActiveTimetableState(completeTimetable);
+
+    // Save in MongoDB Atlas if connected
+    if (mongoose.connection.readyState === 1) {
+      try {
+        await TimetableModel.create(completeTimetable);
+        console.log(`🍃 Timetable [${timetableId}] saved to MongoDB Atlas!`);
+      } catch (dbErr) {
+        console.warn('MongoDB write warning (in-memory state preserved):', dbErr.message);
+      }
+    }
 
     res.status(200).json({
       success: true,
@@ -68,7 +80,20 @@ export async function getActiveTimetableHandler(req, res) {
   try {
     let active = getActiveTimetableState();
 
-    // If no timetable generated yet, generate one on the fly!
+    // Try reading from MongoDB Atlas if active memory is empty
+    if (!active && mongoose.connection.readyState === 1) {
+      try {
+        const dbDoc = await TimetableModel.findOne({ isSimulated: false }).sort({ createdAt: -1 }).lean();
+        if (dbDoc) {
+          active = dbDoc;
+          setActiveTimetableState(active);
+        }
+      } catch (dbErr) {
+        console.warn('MongoDB read warning:', dbErr.message);
+      }
+    }
+
+    // If no timetable in DB or memory, generate one automatically
     if (!active) {
       const collegeData = loadSeedData();
       const events = normalizeCurriculum(collegeData);
@@ -95,6 +120,14 @@ export async function getActiveTimetableHandler(req, res) {
       };
 
       setActiveTimetableState(active);
+
+      if (mongoose.connection.readyState === 1) {
+        try {
+          await TimetableModel.create(active);
+        } catch (dbErr) {
+          console.warn('MongoDB write warning:', dbErr.message);
+        }
+      }
     }
 
     res.status(200).json({
@@ -133,18 +166,35 @@ export function simulateDisruptionHandler(req, res) {
   }
 }
 
-export function commitSimulationHandler(req, res) {
+export async function commitSimulationHandler(req, res) {
   try {
     if (!latestSimulatedTimetable) {
       return res.status(400).json({ success: false, message: 'No simulation result available to commit.' });
     }
 
-    setActiveTimetableState(latestSimulatedTimetable);
+    const committedTimetable = {
+      ...latestSimulatedTimetable,
+      isSimulated: false,
+      timetableId: `tt_committed_${Date.now()}`
+    };
+
+    setActiveTimetableState(committedTimetable);
     latestSimulatedTimetable = null;
+
+    // Persist committed schedule to MongoDB Atlas
+    if (mongoose.connection.readyState === 1) {
+      try {
+        await TimetableModel.create(committedTimetable);
+        console.log(`🍃 Committed simulation persisted to MongoDB Atlas!`);
+      } catch (dbErr) {
+        console.warn('MongoDB commit write warning:', dbErr.message);
+      }
+    }
 
     res.status(200).json({
       success: true,
-      message: 'Simulated disruption schedule committed as live active timetable.'
+      message: 'Simulated disruption schedule committed as live active timetable.',
+      timetableId: committedTimetable.timetableId
     });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to commit simulation', error: error.message });
