@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiClient } from './api/apiClient';
 import { ConflictRadarView } from './components/ConflictRadarView';
+import { AutoSplitterView } from './components/AutoSplitterView';
 
 export function App() {
   const [activeTab, setActiveTab] = useState('grid');
@@ -136,6 +137,7 @@ export function App() {
           {[
             { id: 'grid', label: '📅 Master Institutional Grid' },
             { id: 'radar', label: '🔍 Pre-Flight Conflict Radar', badge: 'NEW' },
+            { id: 'splitter', label: '✂️ Elective Auto-Splitter', badge: 'AI' },
             { id: 'student', label: '👥 Student & Faculty Explorer' },
             { id: 'rooms', label: '🚪 Room Occupancy Heatmap' },
             { id: 'admin', label: '⚡ Admin & What-If Disruptor' }
@@ -161,7 +163,7 @@ export function App() {
               <span>{tab.label}</span>
               {tab.badge && (
                 <span style={{
-                  background: '#ef4444',
+                  background: tab.badge === 'AI' ? '#8b5cf6' : '#ef4444',
                   color: '#ffffff',
                   fontSize: '0.65rem',
                   fontWeight: 800,
@@ -192,6 +194,10 @@ export function App() {
       <main style={{ flex: 1, padding: '2rem', maxWidth: '1600px', width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
         {activeTab === 'radar' && (
           <ConflictRadarView />
+        )}
+
+        {activeTab === 'splitter' && (
+          <AutoSplitterView />
         )}
 
         {activeTab === 'grid' && (

@@ -4,6 +4,8 @@ import {
   generateTimetableHandler,
   getActiveTimetableHandler,
   getConflictRadarHandler,
+  getElectiveDemandHandler,
+  executeAutoSplitHandler,
   simulateDisruptionHandler,
   commitSimulationHandler
 } from '../controllers/timetableController.js';
@@ -21,6 +23,10 @@ router.get('/timetable/active', getActiveTimetableHandler);
 
 // Feature 1: Pre-Flight Student Clash Radar & Conflict Graph Explorer
 router.get('/conflict-radar', getConflictRadarHandler);
+
+// Feature 3: Elective Demand & Room Capacity Auto-Splitter
+router.get('/electives/overdemand', getElectiveDemandHandler);
+router.post('/electives/auto-split', executeAutoSplitHandler);
 
 // What-If Simulation Routes
 router.post('/timetable/simulate', simulateDisruptionHandler);

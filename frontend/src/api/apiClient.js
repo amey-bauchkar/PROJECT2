@@ -44,7 +44,19 @@ export const apiClient = {
     return fetchWithFallback('/conflict-radar');
   },
 
-  // 6. Simulate Campus Disruption
+  // 6. Feature 3: Elective Demand & Room Capacity Auto-Splitter
+  getElectiveOverdemand: async () => {
+    return fetchWithFallback('/electives/overdemand');
+  },
+
+  executeAutoSplit: async (payload) => {
+    return fetchWithFallback('/electives/auto-split', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  },
+
+  // 7. Simulate Campus Disruption
   simulateDisruption: async (disruptionPayload) => {
     return fetchWithFallback('/timetable/simulate', {
       method: 'POST',
@@ -52,12 +64,12 @@ export const apiClient = {
     });
   },
 
-  // 7. Commit Simulation
+  // 8. Commit Simulation
   commitSimulation: async () => {
     return fetchWithFallback('/timetable/simulate/commit', { method: 'POST' });
   },
 
-  // 8. Explainable AI Diagnostics
+  // 9. Explainable AI Diagnostics
   getDiagnostics: async (timetableId = 'active') => {
     return fetchWithFallback(`/diagnostics/explain/${timetableId}`);
   }
