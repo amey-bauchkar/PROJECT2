@@ -1,5 +1,5 @@
 ﻿import mongoose from 'mongoose';
-import { loadSeedData, getActiveTimetableState, setActiveTimetableState } from '../config/db.js';
+import { getInstitutionalData, getActiveTimetableState, setActiveTimetableState } from '../config/db.js';
 import { normalizeCurriculum } from '../engine/normalizer.js';
 import { buildConflictMatrix } from '../engine/conflictMatrix.js';
 import { solveTimetable } from '../engine/constraintSolver.js';
@@ -13,7 +13,7 @@ let latestSimulatedTimetable = null;
 
 export async function generateTimetableHandler(req, res) {
   try {
-    const collegeData = loadSeedData();
+    const collegeData = await getInstitutionalData();
 
     // 1. Normalize events
     const events = normalizeCurriculum(collegeData);
@@ -95,7 +95,7 @@ export async function getActiveTimetableHandler(req, res) {
 
     // If no timetable in DB or memory, generate one automatically
     if (!active) {
-      const collegeData = loadSeedData();
+      const collegeData = await getInstitutionalData();
       const events = normalizeCurriculum(collegeData);
       const conflictInfo = buildConflictMatrix(events, collegeData.cohorts);
       const { assignments, executionTimeMs } = solveTimetable(events, collegeData, conflictInfo);
@@ -143,14 +143,14 @@ export async function getActiveTimetableHandler(req, res) {
   }
 }
 
-export function simulateDisruptionHandler(req, res) {
+export async function simulateDisruptionHandler(req, res) {
   try {
     const active = getActiveTimetableState();
     if (!active) {
       return res.status(400).json({ success: false, message: 'No active timetable to simulate disruptions on.' });
     }
 
-    const collegeData = loadSeedData();
+    const collegeData = await getInstitutionalData();
     const result = simulateDisruption(active, req.body, collegeData);
 
     latestSimulatedTimetable = {
