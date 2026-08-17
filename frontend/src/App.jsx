@@ -13,6 +13,12 @@ import {
 } from 'lucide-react';
 import { getActiveTimetable, getDemoConfig } from './api/apiClient';
 import TanmayAdminHub from '../tanmay/TanmayAdminHub';
+import { 
+  MasterTimetableView, 
+  StudentTimetableView, 
+  FacultyTimetableView, 
+  RoomHeatmapView 
+} from '../janhavi/index.js';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('master');
@@ -151,122 +157,18 @@ export default function App() {
       {/* Dynamic Content Views */}
       <main style={{ flex: 1 }}>
         {activeTab === 'master' && (
-          <div className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <div>
-                <h2>Master College Timetable</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                  Institutional 5-Day matrix across all 4 departments with synchronized NEP elective bands.
-                </p>
-              </div>
-              <div style={{ display: 'flex', gap: '6px' }}>
-                <span className="badge badge-major">Major</span>
-                <span className="badge badge-minor">Minor</span>
-                <span className="badge badge-mdc">MDC</span>
-                <span className="badge badge-aec">AEC</span>
-                <span className="badge badge-sec">SEC (Lab)</span>
-                <span className="badge badge-vac">VAC</span>
-              </div>
-            </div>
-
-            {/* Quick Preview Grid */}
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
-                <thead>
-                  <tr style={{ background: 'var(--bg-subtle)', borderBottom: '2px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px' }}>Day</th>
-                    <th style={{ padding: '12px' }}>Period 1 (09:00)</th>
-                    <th style={{ padding: '12px' }}>Period 2 (09:50)</th>
-                    <th style={{ padding: '12px' }}>Period 3 (11:00)</th>
-                    <th style={{ padding: '12px' }}>Period 5-6 (01:40 PM Lab)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((day) => {
-                    const dayEntries = timetable?.entries?.filter(e => e.day === day) || [];
-                    return (
-                      <tr key={day} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                        <td style={{ padding: '14px 12px', fontWeight: 700, color: 'var(--primary-900)' }}>{day}</td>
-                        <td style={{ padding: '12px' }}>
-                          {dayEntries.filter(e => e.period === 1).map(e => (
-                            <div key={e.id} style={{ marginBottom: '4px' }}>
-                              <span className={`badge badge-${e.category.toLowerCase()}`} style={{ marginRight: '6px' }}>{e.category}</span>
-                              <strong>{e.courseName}</strong> <span style={{ color: 'var(--text-muted)' }}>({e.roomNumber})</span>
-                            </div>
-                          ))}
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          {dayEntries.filter(e => e.period === 2).map(e => (
-                            <div key={e.id} style={{ marginBottom: '4px' }}>
-                              <span className={`badge badge-${e.category.toLowerCase()}`} style={{ marginRight: '6px' }}>{e.category}</span>
-                              <strong>{e.courseName}</strong> <span style={{ color: 'var(--text-muted)' }}>({e.roomNumber})</span>
-                            </div>
-                          ))}
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          {dayEntries.filter(e => e.period === 3).map(e => (
-                            <div key={e.id} style={{ marginBottom: '4px' }}>
-                              <span className={`badge badge-${e.category.toLowerCase()}`} style={{ marginRight: '6px' }}>{e.category}</span>
-                              <strong>{e.courseName}</strong> <span style={{ color: 'var(--text-muted)' }}>({e.roomNumber})</span>
-                            </div>
-                          ))}
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          {dayEntries.filter(e => e.period === 5).map(e => (
-                            <div key={e.id} style={{
-                              background: 'var(--nep-sec-bg)',
-                              borderLeft: '4px solid var(--nep-sec-border)',
-                              padding: '6px 10px',
-                              borderRadius: 'var(--radius-sm)'
-                            }}>
-                              <span className={`badge badge-${e.category.toLowerCase()}`} style={{ marginRight: '6px' }}>{e.category}</span>
-                              <strong>{e.courseName}</strong> • {e.roomNumber} ({e.facultyName})
-                            </div>
-                          ))}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-            
-            <div style={{ marginTop: '16px', padding: '12px', background: 'var(--primary-50)', borderRadius: 'var(--radius-md)', color: 'var(--primary-900)', fontSize: '0.88rem' }}>
-              💡 <em>Janhavi will render the high-density interactive grid in <code>frontend/janhavi/views/MasterTimetableView.jsx</code>.</em>
-            </div>
-          </div>
+          <MasterTimetableView />
         )}
 
         {activeTab === 'student' && (
-          <div className="card">
-            <h2>Personalized Student & Faculty Explorer</h2>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
-              Isolate personal student schedules for any Major + Minor elective combination or inspect faculty teaching workloads.
-            </p>
-            <div style={{ padding: '30px', textAlign: 'center', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)' }}>
-              <Users size={40} color="var(--primary-600)" style={{ marginBottom: '12px' }} />
-              <p style={{ fontWeight: 600 }}>Student & Faculty View Module Ready for Janhavi</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Janhavi connects <code>StudentTimetableView.jsx</code> and <code>FacultyTimetableView.jsx</code> here.
-              </p>
-            </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <StudentTimetableView />
+            <FacultyTimetableView />
           </div>
         )}
 
         {activeTab === 'rooms' && (
-          <div className="card">
-            <h2>Room & Laboratory Occupancy Heatmap</h2>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
-              12 physical venues (Lecture Halls, Computer Labs, Science Labs) with real-time capacity and collision safety audits.
-            </p>
-            <div style={{ padding: '30px', textAlign: 'center', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)' }}>
-              <Building size={40} color="var(--primary-600)" style={{ marginBottom: '12px' }} />
-              <p style={{ fontWeight: 600 }}>Room Heatmap Module Ready for Janhavi</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Janhavi connects <code>RoomHeatmapView.jsx</code> here.
-              </p>
-            </div>
-          </div>
+          <RoomHeatmapView />
         )}
 
         {activeTab === 'admin' && (
