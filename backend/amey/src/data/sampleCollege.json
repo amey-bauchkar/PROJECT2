@@ -1,72 +1,603 @@
-﻿{
+{
   "institution": "Government Degree College, Jammu & Kashmir",
   "academicYear": "2026-2027",
   "semester": "Semester 1 (NEP 2020 Multidisciplinary)",
   "departments": [
-    { "id": "DEP_CS", "code": "CS", "name": "Computer Science & Engineering", "hod": "Dr. A. Verma" },
-    { "id": "DEP_PHYS", "code": "PHYS", "name": "Department of Physics", "hod": "Dr. S. Sharma" },
-    { "id": "DEP_ECON", "code": "ECON", "name": "Department of Economics", "hod": "Dr. M. Koul" },
-    { "id": "DEP_LIT", "code": "LIT", "name": "Department of English & Modern Languages", "hod": "Dr. R. Dhar" }
+    {
+      "id": "DEP_CS",
+      "code": "CS",
+      "name": "Computer Science & Engineering",
+      "hod": "Dr. A. Verma"
+    },
+    {
+      "id": "DEP_PHYS",
+      "code": "PHYS",
+      "name": "Department of Physics",
+      "hod": "Dr. S. Sharma"
+    },
+    {
+      "id": "DEP_ECON",
+      "code": "ECON",
+      "name": "Department of Economics",
+      "hod": "Dr. M. Koul"
+    },
+    {
+      "id": "DEP_LIT",
+      "code": "LIT",
+      "name": "Department of English & Modern Languages",
+      "hod": "Dr. R. Dhar"
+    }
   ],
   "rooms": [
-    { "id": "LH_101", "roomNumber": "LH-101", "building": "Academic Block A", "capacity": 70, "type": "LectureHall", "hasProjector": true },
-    { "id": "LH_102", "roomNumber": "LH-102", "building": "Academic Block A", "capacity": 70, "type": "LectureHall", "hasProjector": true },
-    { "id": "LH_201", "roomNumber": "LH-201", "building": "Academic Block A", "capacity": 60, "type": "LectureHall", "hasProjector": true },
-    { "id": "LH_202", "roomNumber": "LH-202", "building": "Academic Block A", "capacity": 60, "type": "LectureHall", "hasProjector": true },
-    { "id": "LH_301", "roomNumber": "LH-301", "building": "Academic Block B", "capacity": 50, "type": "LectureHall", "hasProjector": false },
-    { "id": "LH_302", "roomNumber": "LH-302", "building": "Academic Block B", "capacity": 50, "type": "LectureHall", "hasProjector": false },
-    { "id": "AUD_01", "roomNumber": "Main Auditorium", "building": "Central Block", "capacity": 150, "type": "Auditorium", "hasProjector": true },
-    { "id": "LAB_CS1", "roomNumber": "Lab CS-1", "building": "Computing Center", "capacity": 35, "type": "ComputerLab", "hasComputers": true },
-    { "id": "LAB_CS2", "roomNumber": "Lab CS-2", "building": "Computing Center", "capacity": 35, "type": "ComputerLab", "hasComputers": true },
-    { "id": "LAB_PHYS1", "roomNumber": "Physics Lab 1 (Optics)", "building": "Science Complex", "capacity": 30, "type": "ScienceLab", "hasSpecialApparatus": true },
-    { "id": "LAB_PHYS2", "roomNumber": "Physics Lab 2 (Electronics)", "building": "Science Complex", "capacity": 30, "type": "ScienceLab", "hasSpecialApparatus": true },
-    { "id": "LAB_LANG", "roomNumber": "Digital Language Lab", "building": "Humanities Block", "capacity": 40, "type": "LanguageLab", "hasAudioSystem": true }
+    {
+      "id": "LH_101",
+      "roomNumber": "LH-101",
+      "building": "Academic Block A",
+      "capacity": 70,
+      "type": "LectureHall",
+      "hasProjector": true
+    },
+    {
+      "id": "LH_102",
+      "roomNumber": "LH-102",
+      "building": "Academic Block A",
+      "capacity": 70,
+      "type": "LectureHall",
+      "hasProjector": true
+    },
+    {
+      "id": "LH_201",
+      "roomNumber": "LH-201",
+      "building": "Academic Block A",
+      "capacity": 60,
+      "type": "LectureHall",
+      "hasProjector": true
+    },
+    {
+      "id": "LH_202",
+      "roomNumber": "LH-202",
+      "building": "Academic Block A",
+      "capacity": 60,
+      "type": "LectureHall",
+      "hasProjector": true
+    },
+    {
+      "id": "LH_301",
+      "roomNumber": "LH-301",
+      "building": "Academic Block B",
+      "capacity": 50,
+      "type": "LectureHall",
+      "hasProjector": false
+    },
+    {
+      "id": "LH_302",
+      "roomNumber": "LH-302",
+      "building": "Academic Block B",
+      "capacity": 50,
+      "type": "LectureHall",
+      "hasProjector": false
+    },
+    {
+      "id": "AUD_01",
+      "roomNumber": "Main Auditorium",
+      "building": "Central Block",
+      "capacity": 150,
+      "type": "Auditorium",
+      "hasProjector": true
+    },
+    {
+      "id": "LAB_CS1",
+      "roomNumber": "Lab CS-1",
+      "building": "Computing Center",
+      "capacity": 60,
+      "type": "ComputerLab",
+      "hasComputers": true
+    },
+    {
+      "id": "LAB_CS2",
+      "roomNumber": "Lab CS-2",
+      "building": "Computing Center",
+      "capacity": 60,
+      "type": "ComputerLab",
+      "hasComputers": true
+    },
+    {
+      "id": "LAB_PHYS1",
+      "roomNumber": "Physics Lab 1 (Optics)",
+      "building": "Science Complex",
+      "capacity": 60,
+      "type": "ScienceLab",
+      "hasSpecialApparatus": true
+    },
+    {
+      "id": "LAB_PHYS2",
+      "roomNumber": "Physics Lab 2 (Electronics)",
+      "building": "Science Complex",
+      "capacity": 60,
+      "type": "ScienceLab",
+      "hasSpecialApparatus": true
+    },
+    {
+      "id": "LAB_LANG",
+      "roomNumber": "Digital Language Lab",
+      "building": "Humanities Block",
+      "capacity": 60,
+      "type": "LanguageLab",
+      "hasAudioSystem": true
+    }
   ],
   "faculty": [
-    { "id": "FAC_01", "name": "Dr. A. Verma", "departmentId": "DEP_CS", "designation": "Professor & HOD", "maxHoursPerWeek": 14, "unavailableSlots": [{ "day": "Wed", "period": 5 }] },
-    { "id": "FAC_02", "name": "Prof. N. Gupta", "departmentId": "DEP_CS", "designation": "Associate Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_03", "name": "Dr. P. Bhat", "departmentId": "DEP_CS", "designation": "Assistant Professor", "maxHoursPerWeek": 16, "unavailableSlots": [{ "day": "Mon", "period": 1 }] },
-    { "id": "FAC_04", "name": "Prof. T. Raina", "departmentId": "DEP_CS", "designation": "Assistant Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_05", "name": "Dr. S. Sharma", "departmentId": "DEP_PHYS", "designation": "Professor & HOD", "maxHoursPerWeek": 14, "unavailableSlots": [{ "day": "Fri", "period": 8 }] },
-    { "id": "FAC_06", "name": "Prof. V. Jamwal", "departmentId": "DEP_PHYS", "designation": "Associate Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_07", "name": "Dr. K. Razdan", "departmentId": "DEP_PHYS", "designation": "Assistant Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_08", "name": "Prof. M. Singh", "departmentId": "DEP_PHYS", "designation": "Assistant Professor", "maxHoursPerWeek": 16, "unavailableSlots": [{ "day": "Tue", "period": 4 }] },
-    { "id": "FAC_09", "name": "Dr. M. Koul", "departmentId": "DEP_ECON", "designation": "Professor & HOD", "maxHoursPerWeek": 14, "unavailableSlots": [] },
-    { "id": "FAC_10", "name": "Prof. A. Lone", "departmentId": "DEP_ECON", "designation": "Associate Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_11", "name": "Dr. Z. Mir", "departmentId": "DEP_ECON", "designation": "Assistant Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_12", "name": "Prof. H. Qureshi", "departmentId": "DEP_ECON", "designation": "Assistant Professor", "maxHoursPerWeek": 16, "unavailableSlots": [{ "day": "Thu", "period": 7 }] },
-    { "id": "FAC_13", "name": "Dr. R. Dhar", "departmentId": "DEP_LIT", "designation": "Professor & HOD", "maxHoursPerWeek": 14, "unavailableSlots": [] },
-    { "id": "FAC_14", "name": "Prof. G. Kaul", "departmentId": "DEP_LIT", "designation": "Associate Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_15", "name": "Dr. F. Wani", "departmentId": "DEP_LIT", "designation": "Assistant Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_16", "name": "Prof. I. Bukhari", "departmentId": "DEP_LIT", "designation": "Assistant Professor", "maxHoursPerWeek": 16, "unavailableSlots": [] },
-    { "id": "FAC_17", "name": "Dr. S. K. Tikoo", "departmentId": "DEP_CS", "designation": "Guest Faculty", "maxHoursPerWeek": 12, "unavailableSlots": [] },
-    { "id": "FAC_18", "name": "Dr. B. L. Mattoo", "departmentId": "DEP_PHYS", "designation": "Guest Faculty", "maxHoursPerWeek": 12, "unavailableSlots": [] }
+    {
+      "id": "FAC_01",
+      "name": "Dr. A. Verma",
+      "departmentId": "DEP_CS",
+      "designation": "Professor & HOD",
+      "maxHoursPerWeek": 14,
+      "unavailableSlots": [
+        {
+          "day": "Wed",
+          "period": 5
+        }
+      ]
+    },
+    {
+      "id": "FAC_02",
+      "name": "Prof. N. Gupta",
+      "departmentId": "DEP_CS",
+      "designation": "Associate Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_03",
+      "name": "Dr. P. Bhat",
+      "departmentId": "DEP_CS",
+      "designation": "Assistant Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": [
+        {
+          "day": "Mon",
+          "period": 1
+        }
+      ]
+    },
+    {
+      "id": "FAC_04",
+      "name": "Prof. T. Raina",
+      "departmentId": "DEP_CS",
+      "designation": "Assistant Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_05",
+      "name": "Dr. S. Sharma",
+      "departmentId": "DEP_PHYS",
+      "designation": "Professor & HOD",
+      "maxHoursPerWeek": 14,
+      "unavailableSlots": [
+        {
+          "day": "Fri",
+          "period": 8
+        }
+      ]
+    },
+    {
+      "id": "FAC_06",
+      "name": "Prof. V. Jamwal",
+      "departmentId": "DEP_PHYS",
+      "designation": "Associate Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_07",
+      "name": "Dr. K. Razdan",
+      "departmentId": "DEP_PHYS",
+      "designation": "Assistant Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_08",
+      "name": "Prof. M. Singh",
+      "departmentId": "DEP_PHYS",
+      "designation": "Assistant Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": [
+        {
+          "day": "Tue",
+          "period": 4
+        }
+      ]
+    },
+    {
+      "id": "FAC_09",
+      "name": "Dr. M. Koul",
+      "departmentId": "DEP_ECON",
+      "designation": "Professor & HOD",
+      "maxHoursPerWeek": 14,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_10",
+      "name": "Prof. A. Lone",
+      "departmentId": "DEP_ECON",
+      "designation": "Associate Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_11",
+      "name": "Dr. Z. Mir",
+      "departmentId": "DEP_ECON",
+      "designation": "Assistant Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_12",
+      "name": "Prof. H. Qureshi",
+      "departmentId": "DEP_ECON",
+      "designation": "Assistant Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": [
+        {
+          "day": "Thu",
+          "period": 7
+        }
+      ]
+    },
+    {
+      "id": "FAC_13",
+      "name": "Dr. R. Dhar",
+      "departmentId": "DEP_LIT",
+      "designation": "Professor & HOD",
+      "maxHoursPerWeek": 14,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_14",
+      "name": "Prof. G. Kaul",
+      "departmentId": "DEP_LIT",
+      "designation": "Associate Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_15",
+      "name": "Dr. F. Wani",
+      "departmentId": "DEP_LIT",
+      "designation": "Assistant Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_16",
+      "name": "Prof. I. Bukhari",
+      "departmentId": "DEP_LIT",
+      "designation": "Assistant Professor",
+      "maxHoursPerWeek": 16,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_17",
+      "name": "Dr. S. K. Tikoo",
+      "departmentId": "DEP_CS",
+      "designation": "Guest Faculty",
+      "maxHoursPerWeek": 12,
+      "unavailableSlots": []
+    },
+    {
+      "id": "FAC_18",
+      "name": "Dr. B. L. Mattoo",
+      "departmentId": "DEP_PHYS",
+      "designation": "Guest Faculty",
+      "maxHoursPerWeek": 12,
+      "unavailableSlots": []
+    }
   ],
   "courses": [
-    { "id": "CS101", "code": "CS-101", "name": "Programming Fundamentals & C++", "departmentId": "DEP_CS", "category": "Major", "credits": 4, "theoryHoursPerWeek": 3, "labHoursPerWeek": 2, "facultyId": "FAC_01", "requiredRoomType": "LectureHall", "requiredLabType": "ComputerLab" },
-    { "id": "CS102", "code": "CS-102", "name": "Discrete Mathematical Structures", "departmentId": "DEP_CS", "category": "Major", "credits": 4, "theoryHoursPerWeek": 4, "labHoursPerWeek": 0, "facultyId": "FAC_02", "requiredRoomType": "LectureHall" },
-    { "id": "PHYS101", "code": "PHYS-101", "name": "Mechanics & Wave Optics", "departmentId": "DEP_PHYS", "category": "Major", "credits": 4, "theoryHoursPerWeek": 3, "labHoursPerWeek": 2, "facultyId": "FAC_05", "requiredRoomType": "LectureHall", "requiredLabType": "ScienceLab" },
-    { "id": "PHYS102", "code": "PHYS-102", "name": "Mathematical Physics I", "departmentId": "DEP_PHYS", "category": "Major", "credits": 4, "theoryHoursPerWeek": 4, "labHoursPerWeek": 0, "facultyId": "FAC_06", "requiredRoomType": "LectureHall" },
-    { "id": "ECON101", "code": "ECON-101", "name": "Principles of Microeconomics", "departmentId": "DEP_ECON", "category": "Major", "credits": 4, "theoryHoursPerWeek": 4, "labHoursPerWeek": 0, "facultyId": "FAC_09", "requiredRoomType": "LectureHall" },
-    { "id": "ECON102", "code": "ECON-102", "name": "Quantitative Methods for Economics", "departmentId": "DEP_ECON", "category": "Major", "credits": 4, "theoryHoursPerWeek": 4, "labHoursPerWeek": 0, "facultyId": "FAC_10", "requiredRoomType": "LectureHall" },
-    { "id": "LIT101", "code": "LIT-101", "name": "Introduction to World Literature", "departmentId": "DEP_LIT", "category": "Major", "credits": 4, "theoryHoursPerWeek": 4, "labHoursPerWeek": 0, "facultyId": "FAC_13", "requiredRoomType": "LectureHall" },
-    { "id": "LIT102", "code": "LIT-102", "name": "Foundations of English Language & Phonetics", "departmentId": "DEP_LIT", "category": "Major", "credits": 4, "theoryHoursPerWeek": 3, "labHoursPerWeek": 2, "facultyId": "FAC_14", "requiredRoomType": "LectureHall", "requiredLabType": "LanguageLab" },
-    { "id": "CS_MIN_01", "code": "CS-M101", "name": "Computational Thinking & Data Literacy", "departmentId": "DEP_CS", "category": "Minor", "credits": 4, "theoryHoursPerWeek": 3, "labHoursPerWeek": 2, "facultyId": "FAC_03", "requiredRoomType": "LectureHall", "requiredLabType": "ComputerLab", "basketId": "BASKET_MINOR_1" },
-    { "id": "PHYS_MIN_01", "code": "PHYS-M101", "name": "Everyday Physics & Green Energy", "departmentId": "DEP_PHYS", "category": "Minor", "credits": 4, "theoryHoursPerWeek": 4, "labHoursPerWeek": 0, "facultyId": "FAC_07", "requiredRoomType": "LectureHall", "basketId": "BASKET_MINOR_1" },
-    { "id": "ECON_MIN_01", "code": "ECON-M101", "name": "Macroeconomics for Public Policy", "departmentId": "DEP_ECON", "category": "Minor", "credits": 4, "theoryHoursPerWeek": 4, "labHoursPerWeek": 0, "facultyId": "FAC_11", "requiredRoomType": "LectureHall", "basketId": "BASKET_MINOR_1" },
-    { "id": "LIT_MIN_01", "code": "LIT-M101", "name": "Creative Writing & Modern Discourse", "departmentId": "DEP_LIT", "category": "Minor", "credits": 4, "theoryHoursPerWeek": 4, "labHoursPerWeek": 0, "facultyId": "FAC_15", "requiredRoomType": "LectureHall", "basketId": "BASKET_MINOR_1" },
-    { "id": "MDC_ASTRO", "code": "MDC-101", "name": "Introduction to Astronomy & Space Science", "departmentId": "DEP_PHYS", "category": "MDC", "credits": 3, "theoryHoursPerWeek": 3, "labHoursPerWeek": 0, "facultyId": "FAC_08", "requiredRoomType": "LectureHall", "basketId": "BASKET_MDC_1" },
-    { "id": "MDC_ENV", "code": "MDC-102", "name": "Himalayan Ecology & Climate Action", "departmentId": "DEP_PHYS", "category": "MDC", "credits": 3, "theoryHoursPerWeek": 3, "labHoursPerWeek": 0, "facultyId": "FAC_18", "requiredRoomType": "LectureHall", "basketId": "BASKET_MDC_1" },
-    { "id": "MDC_FIN", "code": "MDC-103", "name": "Personal Finance & Investment Markets", "departmentId": "DEP_ECON", "category": "MDC", "credits": 3, "theoryHoursPerWeek": 3, "labHoursPerWeek": 0, "facultyId": "FAC_12", "requiredRoomType": "LectureHall", "basketId": "BASKET_MDC_1" },
-    { "id": "MDC_MEDIA", "code": "MDC-104", "name": "Digital Media & Society", "departmentId": "DEP_LIT", "category": "MDC", "credits": 3, "theoryHoursPerWeek": 3, "labHoursPerWeek": 0, "facultyId": "FAC_16", "requiredRoomType": "LectureHall", "basketId": "BASKET_MDC_1" },
-    { "id": "AEC_COMM", "code": "AEC-101", "name": "Professional Communication in English", "departmentId": "DEP_LIT", "category": "AEC", "credits": 2, "theoryHoursPerWeek": 2, "labHoursPerWeek": 0, "facultyId": "FAC_14", "requiredRoomType": "LectureHall" },
-    { "id": "AEC_REG", "code": "AEC-102", "name": "Regional Languages: Kashmiri / Dogri Literature", "departmentId": "DEP_LIT", "category": "AEC", "credits": 2, "theoryHoursPerWeek": 2, "labHoursPerWeek": 0, "facultyId": "FAC_16", "requiredRoomType": "LectureHall" },
-    { "id": "SEC_WEB", "code": "SEC-101", "name": "Web Design & Modern UI Lab", "departmentId": "DEP_CS", "category": "SEC", "credits": 2, "theoryHoursPerWeek": 0, "labHoursPerWeek": 2, "facultyId": "FAC_04", "requiredLabType": "ComputerLab" },
-    { "id": "SEC_DATA", "code": "SEC-102", "name": "Python for Data Analytics Lab", "departmentId": "DEP_CS", "category": "SEC", "credits": 2, "theoryHoursPerWeek": 0, "labHoursPerWeek": 2, "facultyId": "FAC_17", "requiredLabType": "ComputerLab" },
-    { "id": "SEC_SCI", "code": "SEC-103", "name": "Scientific Instrumentation & Calibration", "departmentId": "DEP_PHYS", "category": "SEC", "credits": 2, "theoryHoursPerWeek": 0, "labHoursPerWeek": 2, "facultyId": "FAC_07", "requiredLabType": "ScienceLab" },
-    { "id": "VAC_ETHICS", "code": "VAC-101", "name": "Digital Ethics, Cyber Law & Privacy", "departmentId": "DEP_CS", "category": "VAC", "credits": 2, "theoryHoursPerWeek": 2, "labHoursPerWeek": 0, "facultyId": "FAC_02", "requiredRoomType": "LectureHall" },
-    { "id": "VAC_ENV", "code": "VAC-102", "name": "Environmental Sustainability Studies", "departmentId": "DEP_PHYS", "category": "VAC", "credits": 2, "theoryHoursPerWeek": 2, "labHoursPerWeek": 0, "facultyId": "FAC_06", "requiredRoomType": "LectureHall" },
-    { "id": "VAC_WELLNESS", "code": "VAC-103", "name": "Holistic Health, Yoga & Physical Fitness", "departmentId": "DEP_LIT", "category": "VAC", "credits": 2, "theoryHoursPerWeek": 2, "labHoursPerWeek": 0, "facultyId": "FAC_15", "requiredRoomType": "Auditorium" }
+    {
+      "id": "CS101",
+      "code": "CS-101",
+      "name": "Programming Fundamentals & C++",
+      "departmentId": "DEP_CS",
+      "category": "Major",
+      "credits": 4,
+      "theoryHoursPerWeek": 3,
+      "labHoursPerWeek": 2,
+      "facultyId": "FAC_01",
+      "requiredRoomType": "LectureHall",
+      "requiredLabType": "ComputerLab"
+    },
+    {
+      "id": "CS102",
+      "code": "CS-102",
+      "name": "Discrete Mathematical Structures",
+      "departmentId": "DEP_CS",
+      "category": "Major",
+      "credits": 4,
+      "theoryHoursPerWeek": 4,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_02",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "PHYS101",
+      "code": "PHYS-101",
+      "name": "Mechanics & Wave Optics",
+      "departmentId": "DEP_PHYS",
+      "category": "Major",
+      "credits": 4,
+      "theoryHoursPerWeek": 3,
+      "labHoursPerWeek": 2,
+      "facultyId": "FAC_05",
+      "requiredRoomType": "LectureHall",
+      "requiredLabType": "ScienceLab"
+    },
+    {
+      "id": "PHYS102",
+      "code": "PHYS-102",
+      "name": "Mathematical Physics I",
+      "departmentId": "DEP_PHYS",
+      "category": "Major",
+      "credits": 4,
+      "theoryHoursPerWeek": 4,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_06",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "ECON101",
+      "code": "ECON-101",
+      "name": "Principles of Microeconomics",
+      "departmentId": "DEP_ECON",
+      "category": "Major",
+      "credits": 4,
+      "theoryHoursPerWeek": 4,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_09",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "ECON102",
+      "code": "ECON-102",
+      "name": "Quantitative Methods for Economics",
+      "departmentId": "DEP_ECON",
+      "category": "Major",
+      "credits": 4,
+      "theoryHoursPerWeek": 4,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_10",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "LIT101",
+      "code": "LIT-101",
+      "name": "Introduction to World Literature",
+      "departmentId": "DEP_LIT",
+      "category": "Major",
+      "credits": 4,
+      "theoryHoursPerWeek": 4,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_13",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "LIT102",
+      "code": "LIT-102",
+      "name": "Foundations of English Language & Phonetics",
+      "departmentId": "DEP_LIT",
+      "category": "Major",
+      "credits": 4,
+      "theoryHoursPerWeek": 3,
+      "labHoursPerWeek": 2,
+      "facultyId": "FAC_14",
+      "requiredRoomType": "LectureHall",
+      "requiredLabType": "LanguageLab"
+    },
+    {
+      "id": "CS_MIN_01",
+      "code": "CS-M101",
+      "name": "Computational Thinking & Data Literacy",
+      "departmentId": "DEP_CS",
+      "category": "Minor",
+      "credits": 4,
+      "theoryHoursPerWeek": 3,
+      "labHoursPerWeek": 2,
+      "facultyId": "FAC_03",
+      "requiredRoomType": "LectureHall",
+      "requiredLabType": "ComputerLab",
+      "basketId": "BASKET_MINOR_1"
+    },
+    {
+      "id": "PHYS_MIN_01",
+      "code": "PHYS-M101",
+      "name": "Everyday Physics & Green Energy",
+      "departmentId": "DEP_PHYS",
+      "category": "Minor",
+      "credits": 4,
+      "theoryHoursPerWeek": 4,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_07",
+      "requiredRoomType": "LectureHall",
+      "basketId": "BASKET_MINOR_1"
+    },
+    {
+      "id": "ECON_MIN_01",
+      "code": "ECON-M101",
+      "name": "Macroeconomics for Public Policy",
+      "departmentId": "DEP_ECON",
+      "category": "Minor",
+      "credits": 4,
+      "theoryHoursPerWeek": 4,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_11",
+      "requiredRoomType": "LectureHall",
+      "basketId": "BASKET_MINOR_1"
+    },
+    {
+      "id": "LIT_MIN_01",
+      "code": "LIT-M101",
+      "name": "Creative Writing & Modern Discourse",
+      "departmentId": "DEP_LIT",
+      "category": "Minor",
+      "credits": 4,
+      "theoryHoursPerWeek": 4,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_15",
+      "requiredRoomType": "LectureHall",
+      "basketId": "BASKET_MINOR_1"
+    },
+    {
+      "id": "MDC_ASTRO",
+      "code": "MDC-101",
+      "name": "Introduction to Astronomy & Space Science",
+      "departmentId": "DEP_PHYS",
+      "category": "MDC",
+      "credits": 3,
+      "theoryHoursPerWeek": 3,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_08",
+      "requiredRoomType": "LectureHall",
+      "basketId": "BASKET_MDC_1"
+    },
+    {
+      "id": "MDC_ENV",
+      "code": "MDC-102",
+      "name": "Himalayan Ecology & Climate Action",
+      "departmentId": "DEP_PHYS",
+      "category": "MDC",
+      "credits": 3,
+      "theoryHoursPerWeek": 3,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_18",
+      "requiredRoomType": "LectureHall",
+      "basketId": "BASKET_MDC_1"
+    },
+    {
+      "id": "MDC_FIN",
+      "code": "MDC-103",
+      "name": "Personal Finance & Investment Markets",
+      "departmentId": "DEP_ECON",
+      "category": "MDC",
+      "credits": 3,
+      "theoryHoursPerWeek": 3,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_12",
+      "requiredRoomType": "LectureHall",
+      "basketId": "BASKET_MDC_1"
+    },
+    {
+      "id": "MDC_MEDIA",
+      "code": "MDC-104",
+      "name": "Digital Media & Society",
+      "departmentId": "DEP_LIT",
+      "category": "MDC",
+      "credits": 3,
+      "theoryHoursPerWeek": 3,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_16",
+      "requiredRoomType": "LectureHall",
+      "basketId": "BASKET_MDC_1"
+    },
+    {
+      "id": "AEC_COMM",
+      "code": "AEC-101",
+      "name": "Professional Communication in English",
+      "departmentId": "DEP_LIT",
+      "category": "AEC",
+      "credits": 2,
+      "theoryHoursPerWeek": 2,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_14",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "AEC_REG",
+      "code": "AEC-102",
+      "name": "Regional Languages: Kashmiri / Dogri Literature",
+      "departmentId": "DEP_LIT",
+      "category": "AEC",
+      "credits": 2,
+      "theoryHoursPerWeek": 2,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_16",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "SEC_WEB",
+      "code": "SEC-101",
+      "name": "Web Design & Modern UI Lab",
+      "departmentId": "DEP_CS",
+      "category": "SEC",
+      "credits": 2,
+      "theoryHoursPerWeek": 0,
+      "labHoursPerWeek": 2,
+      "facultyId": "FAC_04",
+      "requiredLabType": "ComputerLab"
+    },
+    {
+      "id": "SEC_DATA",
+      "code": "SEC-102",
+      "name": "Python for Data Analytics Lab",
+      "departmentId": "DEP_CS",
+      "category": "SEC",
+      "credits": 2,
+      "theoryHoursPerWeek": 0,
+      "labHoursPerWeek": 2,
+      "facultyId": "FAC_17",
+      "requiredLabType": "ComputerLab"
+    },
+    {
+      "id": "SEC_SCI",
+      "code": "SEC-103",
+      "name": "Scientific Instrumentation & Calibration",
+      "departmentId": "DEP_PHYS",
+      "category": "SEC",
+      "credits": 2,
+      "theoryHoursPerWeek": 0,
+      "labHoursPerWeek": 2,
+      "facultyId": "FAC_07",
+      "requiredLabType": "ScienceLab"
+    },
+    {
+      "id": "VAC_ETHICS",
+      "code": "VAC-101",
+      "name": "Digital Ethics, Cyber Law & Privacy",
+      "departmentId": "DEP_CS",
+      "category": "VAC",
+      "credits": 2,
+      "theoryHoursPerWeek": 2,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_02",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "VAC_ENV",
+      "code": "VAC-102",
+      "name": "Environmental Sustainability Studies",
+      "departmentId": "DEP_PHYS",
+      "category": "VAC",
+      "credits": 2,
+      "theoryHoursPerWeek": 2,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_06",
+      "requiredRoomType": "LectureHall"
+    },
+    {
+      "id": "VAC_WELLNESS",
+      "code": "VAC-103",
+      "name": "Holistic Health, Yoga & Physical Fitness",
+      "departmentId": "DEP_LIT",
+      "category": "VAC",
+      "credits": 2,
+      "theoryHoursPerWeek": 2,
+      "labHoursPerWeek": 0,
+      "facultyId": "FAC_15",
+      "requiredRoomType": "Auditorium"
+    }
   ],
   "cohorts": [
     {
@@ -74,28 +605,60 @@
       "name": "B.Sc. Computer Science (Year 1, Major)",
       "departmentId": "DEP_CS",
       "studentCount": 60,
-      "enrolledCourseIds": ["CS101", "CS102", "ECON_MIN_01", "MDC_ASTRO", "AEC_COMM", "SEC_WEB", "VAC_ETHICS"]
+      "enrolledCourseIds": [
+        "CS101",
+        "CS102",
+        "ECON_MIN_01",
+        "MDC_ASTRO",
+        "AEC_COMM",
+        "SEC_WEB",
+        "VAC_ETHICS"
+      ]
     },
     {
       "id": "COHORT_PHYS_Y1",
       "name": "B.Sc. Physics (Year 1, Major)",
       "departmentId": "DEP_PHYS",
       "studentCount": 50,
-      "enrolledCourseIds": ["PHYS101", "PHYS102", "CS_MIN_01", "MDC_FIN", "AEC_COMM", "SEC_SCI", "VAC_ENV"]
+      "enrolledCourseIds": [
+        "PHYS101",
+        "PHYS102",
+        "CS_MIN_01",
+        "MDC_FIN",
+        "AEC_COMM",
+        "SEC_SCI",
+        "VAC_ENV"
+      ]
     },
     {
       "id": "COHORT_ECON_Y1",
       "name": "B.A. Economics (Year 1, Major)",
       "departmentId": "DEP_ECON",
       "studentCount": 55,
-      "enrolledCourseIds": ["ECON101", "ECON102", "CS_MIN_01", "MDC_ENV", "AEC_COMM", "SEC_DATA", "VAC_WELLNESS"]
+      "enrolledCourseIds": [
+        "ECON101",
+        "ECON102",
+        "CS_MIN_01",
+        "MDC_ENV",
+        "AEC_COMM",
+        "SEC_DATA",
+        "VAC_WELLNESS"
+      ]
     },
     {
       "id": "COHORT_LIT_Y1",
       "name": "B.A. English Literature (Year 1, Major)",
       "departmentId": "DEP_LIT",
       "studentCount": 45,
-      "enrolledCourseIds": ["LIT101", "LIT102", "ECON_MIN_01", "MDC_MEDIA", "AEC_REG", "SEC_WEB", "VAC_WELLNESS"]
+      "enrolledCourseIds": [
+        "LIT101",
+        "LIT102",
+        "ECON_MIN_01",
+        "MDC_MEDIA",
+        "AEC_REG",
+        "SEC_WEB",
+        "VAC_WELLNESS"
+      ]
     }
   ]
 }
