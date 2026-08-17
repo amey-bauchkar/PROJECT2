@@ -12,6 +12,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { getActiveTimetable, getDemoConfig } from './api/apiClient';
+import TanmayAdminHub from '../tanmay/TanmayAdminHub';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('master');
@@ -269,19 +270,10 @@ export default function App() {
         )}
 
         {activeTab === 'admin' && (
-          <div className="card">
-            <h2>Admin Command Center & Live What-If Disruptor</h2>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
-              Configure NEP course credit baskets, trigger sub-second AI scheduling, and simulate live campus disruptions.
-            </p>
-            <div style={{ padding: '30px', textAlign: 'center', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)' }}>
-              <Sliders size={40} color="var(--primary-600)" style={{ marginBottom: '12px' }} />
-              <p style={{ fontWeight: 600 }}>Admin & What-If Module Ready for Tanmay</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Tanmay connects <code>AdminConfigView.jsx</code>, <code>DiagnosticDashboardView.jsx</code>, and <code>WhatIfDisruptorView.jsx</code> here.
-              </p>
-            </div>
-          </div>
+          <TanmayAdminHub 
+            timetable={timetable} 
+            onTimetableUpdated={loadData} 
+          />
         )}
       </main>
 
