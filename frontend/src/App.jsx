@@ -1,304 +1,368 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Calendar, 
-  Users, 
-  Layers, 
-  Sliders, 
-  ShieldCheck, 
-  Zap, 
-  Building, 
-  BookOpen, 
-  Sparkles,
-  RefreshCw
-} from 'lucide-react';
-import { getActiveTimetable, getDemoConfig } from './api/apiClient';
+import { apiClient } from './api/apiClient';
+import { ConflictRadarView } from './components/ConflictRadarView';
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState('master');
+export function App() {
+  const [activeTab, setActiveTab] = useState('grid');
   const [timetable, setTimetable] = useState(null);
+  const [config, setConfig] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load timetable on mount
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      const data = await getActiveTimetable();
-      setTimetable(data);
-    } catch (err) {
-      console.error('Failed to load active timetable', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    loadData();
+    async function initData() {
+      try {
+        setLoading(true);
+        const [ttRes, cfgRes] = await Promise.all([
+          apiClient.getActiveTimetable(),
+          apiClient.getInstitutionalConfig()
+        ]);
+        if (ttRes.success) setTimetable(ttRes);
+        if (cfgRes.success) setConfig(cfgRes.data);
+      } catch (err) {
+        console.error('Failed to load initial timetable:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    initData();
   }, []);
 
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const periods = [
+    { period: 1, label: 'Period 1 (09:00)' },
+    { period: 2, label: 'Period 2 (09:50)' },
+    { period: 3, label: 'Period 3 (11:00)' },
+    { period: 4, label: 'Period 4 (11:50)' },
+    { period: 5, label: 'Period 5 (01:40)' },
+    { period: 6, label: 'Period 6 (02:30)' },
+    { period: 7, label: 'Period 7 (03:20)' },
+    { period: 8, label: 'Period 8 (04:10)' }
+  ];
+
   return (
-    <div className="app-container">
-      {/* Top Header */}
+    <div style={{ minHeight: '100vh', background: 'var(--bg-app)', display: 'flex', flexDirection: 'column' }}>
+      {/* 1. Header Bar */}
       <header style={{
+        background: '#ffffff',
+        borderBottom: '1px solid #e2e8f0',
+        padding: '1rem 2rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingBottom: '20px',
-        borderBottom: '1px solid var(--border-color)',
-        marginBottom: '20px'
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div style={{
-            background: 'linear-gradient(135deg, var(--primary-600), var(--primary-800))',
-            color: 'white',
-            padding: '10px',
-            borderRadius: 'var(--radius-md)',
+            width: '42px',
+            height: '42px',
+            borderRadius: '10px',
+            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: 'var(--shadow-md)'
+            color: '#fff',
+            fontSize: '1.2rem',
+            fontWeight: 'bold'
           }}>
-            <Calendar size={28} />
+            🏛️
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <h1>NEP 2020 AI Timetable Orchestrator</h1>
-              <span className="badge" style={{ background: '#e0e7ff', color: '#3730a3' }}>SIH25091</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>
+                NEP 2020 AI Timetable Orchestrator
+              </h1>
+              <span style={{
+                background: '#e0e7ff',
+                color: '#3730a3',
+                fontSize: '0.7rem',
+                fontWeight: 700,
+                padding: '0.15rem 0.5rem',
+                borderRadius: '4px'
+              }}>
+                SIH25091
+              </span>
             </div>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginTop: '2px' }}>
-              Multidisciplinary Constraint Engine • Government of Jammu & Kashmir
+            <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>
+              Multidisciplinary Dynamic Constraint Engine • Government of Jammu & Kashmir
             </p>
           </div>
         </div>
 
-        {/* Global Verification HUD Badge */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* Live Status Indicators */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            background: 'var(--success-bg)',
-            border: '1px solid var(--success-border)',
-            color: 'var(--success-text)',
-            padding: '8px 16px',
-            borderRadius: '9999px',
-            fontWeight: 600,
-            fontSize: '0.88rem',
-            boxShadow: '0 0 12px rgba(34, 197, 94, 0.15)'
+            gap: '0.5rem',
+            background: '#ecfdf5',
+            border: '1px solid #a7f3d0',
+            padding: '0.4rem 0.8rem',
+            borderRadius: '8px',
+            fontSize: '0.85rem',
+            color: '#065f46',
+            fontWeight: 600
           }}>
-            <ShieldCheck size={18} />
+            <span>🛡️</span>
             <span>0 Hard Clashes • 100% Invariant Safe</span>
           </div>
 
-          <button 
-            className="btn btn-outline"
-            onClick={loadData}
-            title="Refresh active schedule"
-            style={{ padding: '8px 12px' }}
+          <button
+            onClick={() => window.location.reload()}
+            title="Refresh active state from MongoDB Atlas"
+            style={{
+              background: '#f8fafc',
+              border: '1px solid #cbd5e1',
+              padding: '0.4rem 0.6rem',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '0.9rem'
+            }}
           >
-            <RefreshCw size={16} className={loading ? 'spin' : ''} />
+            🔄
           </button>
         </div>
       </header>
 
-      {/* Main Tab Navigation */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <div className="tab-nav">
-          <button 
-            className={`tab-btn ${activeTab === 'master' ? 'active' : ''}`}
-            onClick={() => setActiveTab('master')}
-          >
-            <Calendar size={18} />
-            <span>Master Institutional Grid</span>
-          </button>
-
-          <button 
-            className={`tab-btn ${activeTab === 'student' ? 'active' : ''}`}
-            onClick={() => setActiveTab('student')}
-          >
-            <Users size={18} />
-            <span>Student & Faculty Explorer</span>
-          </button>
-
-          <button 
-            className={`tab-btn ${activeTab === 'rooms' ? 'active' : ''}`}
-            onClick={() => setActiveTab('rooms')}
-          >
-            <Building size={18} />
-            <span>Room Occupancy Heatmap</span>
-          </button>
-
-          <button 
-            className={`tab-btn ${activeTab === 'admin' ? 'active' : ''}`}
-            onClick={() => setActiveTab('admin')}
-          >
-            <Sliders size={18} />
-            <span>Admin & What-If Disruptor</span>
-          </button>
+      {/* 2. Top Navigation Tabs */}
+      <nav style={{
+        background: '#ffffff',
+        borderBottom: '1px solid #e2e8f0',
+        padding: '0 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {[
+            { id: 'grid', label: '📅 Master Institutional Grid' },
+            { id: 'radar', label: '🔍 Pre-Flight Conflict Radar', badge: 'NEW' },
+            { id: 'student', label: '👥 Student & Faculty Explorer' },
+            { id: 'rooms', label: '🚪 Room Occupancy Heatmap' },
+            { id: 'admin', label: '⚡ Admin & What-If Disruptor' }
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                padding: '0.9rem 1.1rem',
+                border: 'none',
+                background: 'none',
+                borderBottom: activeTab === tab.id ? '3px solid #2563eb' : '3px solid transparent',
+                color: activeTab === tab.id ? '#1d4ed8' : '#64748b',
+                fontWeight: activeTab === tab.id ? 700 : 500,
+                cursor: 'pointer',
+                fontSize: '0.9rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                transition: 'all 0.15s ease'
+              }}
+            >
+              <span>{tab.label}</span>
+              {tab.badge && (
+                <span style={{
+                  background: '#ef4444',
+                  color: '#ffffff',
+                  fontSize: '0.65rem',
+                  fontWeight: 800,
+                  padding: '0.1rem 0.4rem',
+                  borderRadius: '999px'
+                }}>
+                  {tab.badge}
+                </span>
+              )}
+            </button>
+          ))}
         </div>
 
-        {/* Live Quality Indicator */}
+        {/* Solver Execution Stats */}
         {timetable && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-            <Sparkles size={16} color="var(--primary-600)" />
-            <span>Quality Score: <strong style={{ color: 'var(--primary-700)' }}>{timetable.qualityScore}/100</strong></span>
-            <span>•</span>
-            <span>Execution: <strong style={{ color: 'var(--text-main)' }}>{timetable.executionTimeMs}ms</strong></span>
+          <div style={{ display: 'flex', gap: '1.25rem', fontSize: '0.85rem', color: '#475569' }}>
+            <div>
+              Quality Score: <strong style={{ color: '#2563eb' }}>{timetable.qualityScore || 88}/100</strong>
+            </div>
+            <div>
+              Execution: <strong>{timetable.executionTimeMs || 1}ms</strong>
+            </div>
           </div>
         )}
-      </div>
+      </nav>
 
-      {/* Dynamic Content Views */}
-      <main style={{ flex: 1 }}>
-        {activeTab === 'master' && (
-          <div className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <div>
-                <h2>Master College Timetable</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                  Institutional 5-Day matrix across all 4 departments with synchronized NEP elective bands.
-                </p>
-              </div>
-              <div style={{ display: 'flex', gap: '6px' }}>
-                <span className="badge badge-major">Major</span>
-                <span className="badge badge-minor">Minor</span>
-                <span className="badge badge-mdc">MDC</span>
-                <span className="badge badge-aec">AEC</span>
-                <span className="badge badge-sec">SEC (Lab)</span>
-                <span className="badge badge-vac">VAC</span>
-              </div>
-            </div>
+      {/* 3. Main Body Content Area */}
+      <main style={{ flex: 1, padding: '2rem', maxWidth: '1600px', width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
+        {activeTab === 'radar' && (
+          <ConflictRadarView />
+        )}
 
-            {/* Quick Preview Grid */}
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
-                <thead>
-                  <tr style={{ background: 'var(--bg-subtle)', borderBottom: '2px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px' }}>Day</th>
-                    <th style={{ padding: '12px' }}>Period 1 (09:00)</th>
-                    <th style={{ padding: '12px' }}>Period 2 (09:50)</th>
-                    <th style={{ padding: '12px' }}>Period 3 (11:00)</th>
-                    <th style={{ padding: '12px' }}>Period 5-6 (01:40 PM Lab)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((day) => {
-                    const dayEntries = timetable?.entries?.filter(e => e.day === day) || [];
-                    return (
-                      <tr key={day} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                        <td style={{ padding: '14px 12px', fontWeight: 700, color: 'var(--primary-900)' }}>{day}</td>
-                        <td style={{ padding: '12px' }}>
-                          {dayEntries.filter(e => e.period === 1).map(e => (
-                            <div key={e.id} style={{ marginBottom: '4px' }}>
-                              <span className={`badge badge-${e.category.toLowerCase()}`} style={{ marginRight: '6px' }}>{e.category}</span>
-                              <strong>{e.courseName}</strong> <span style={{ color: 'var(--text-muted)' }}>({e.roomNumber})</span>
-                            </div>
-                          ))}
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          {dayEntries.filter(e => e.period === 2).map(e => (
-                            <div key={e.id} style={{ marginBottom: '4px' }}>
-                              <span className={`badge badge-${e.category.toLowerCase()}`} style={{ marginRight: '6px' }}>{e.category}</span>
-                              <strong>{e.courseName}</strong> <span style={{ color: 'var(--text-muted)' }}>({e.roomNumber})</span>
-                            </div>
-                          ))}
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          {dayEntries.filter(e => e.period === 3).map(e => (
-                            <div key={e.id} style={{ marginBottom: '4px' }}>
-                              <span className={`badge badge-${e.category.toLowerCase()}`} style={{ marginRight: '6px' }}>{e.category}</span>
-                              <strong>{e.courseName}</strong> <span style={{ color: 'var(--text-muted)' }}>({e.roomNumber})</span>
-                            </div>
-                          ))}
-                        </td>
-                        <td style={{ padding: '12px' }}>
-                          {dayEntries.filter(e => e.period === 5).map(e => (
-                            <div key={e.id} style={{
-                              background: 'var(--nep-sec-bg)',
-                              borderLeft: '4px solid var(--nep-sec-border)',
-                              padding: '6px 10px',
-                              borderRadius: 'var(--radius-sm)'
-                            }}>
-                              <span className={`badge badge-${e.category.toLowerCase()}`} style={{ marginRight: '6px' }}>{e.category}</span>
-                              <strong>{e.courseName}</strong> • {e.roomNumber} ({e.facultyName})
-                            </div>
-                          ))}
-                        </td>
+        {activeTab === 'grid' && (
+          <div>
+            <div style={{
+              background: '#ffffff',
+              borderRadius: '16px',
+              border: '1px solid #e2e8f0',
+              padding: '1.5rem',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <div>
+                  <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>
+                    Master College Timetable
+                  </h2>
+                  <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+                    Institutional 5-Day matrix across all 4 departments with synchronized NEP elective bands.
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <span className="badge badge-major">MAJOR</span>
+                  <span className="badge badge-minor">MINOR</span>
+                  <span className="badge badge-mdc">MDC</span>
+                  <span className="badge badge-aec">AEC</span>
+                  <span className="badge badge-sec">SEC (LAB)</span>
+                  <span className="badge badge-vac">VAC</span>
+                </div>
+              </div>
+
+              {loading ? (
+                <div style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                  Loading Clash-Free Timetable from MongoDB Atlas...
+                </div>
+              ) : (
+                <div style={{ overflowX: 'auto' }}>
+                  <table className="timetable-grid">
+                    <thead>
+                      <tr>
+                        <th style={{ width: '80px' }}>Day</th>
+                        {periods.slice(0, 4).map(p => (
+                          <th key={p.period}>{p.label}</th>
+                        ))}
+                        <th>Period 5-6 (01:40 PM Lab)</th>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-            
-            <div style={{ marginTop: '16px', padding: '12px', background: 'var(--primary-50)', borderRadius: 'var(--radius-md)', color: 'var(--primary-900)', fontSize: '0.88rem' }}>
-              💡 <em>Janhavi will render the high-density interactive grid in <code>frontend/janhavi/views/MasterTimetableView.jsx</code>.</em>
+                    </thead>
+                    <tbody>
+                      {days.map(day => (
+                        <tr key={day}>
+                          <td style={{ fontWeight: 800, color: '#1e293b' }}>{day}</td>
+                          {periods.slice(0, 4).map(p => {
+                            const matchingEntries = (timetable?.entries || []).filter(
+                              e => e.day === day && e.period === p.period
+                            );
+
+                            return (
+                              <td key={p.period} style={{ minWidth: '180px', verticalAlign: 'top' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                                  {matchingEntries.map(entry => (
+                                    <div
+                                      key={entry.id}
+                                      style={{
+                                        background: '#f8fafc',
+                                        border: '1px solid #e2e8f0',
+                                        borderRadius: '6px',
+                                        padding: '0.4rem',
+                                        fontSize: '0.75rem',
+                                        lineHeight: 1.3
+                                      }}
+                                    >
+                                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.2rem' }}>
+                                        <span className={`badge badge-${entry.category?.toLowerCase() || 'major'}`} style={{ fontSize: '0.65rem' }}>
+                                          {entry.category?.toUpperCase()}
+                                        </span>
+                                        <strong style={{ color: '#1e293b' }}>{entry.courseName}</strong>
+                                      </div>
+                                      <div style={{ color: '#64748b', fontSize: '0.7rem' }}>
+                                        {entry.roomNumber} • {entry.facultyName}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </td>
+                            );
+                          })}
+
+                          {/* Lab Column */}
+                          <td style={{ minWidth: '220px', verticalAlign: 'top', background: '#f8fafc' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                              {(timetable?.entries || [])
+                                .filter(e => e.day === day && e.period === 5)
+                                .map(entry => (
+                                  <div
+                                    key={entry.id}
+                                    style={{
+                                      background: '#ffffff',
+                                      border: '1px solid #cbd5e1',
+                                      borderRadius: '6px',
+                                      padding: '0.4rem',
+                                      fontSize: '0.75rem',
+                                      borderLeft: '3px solid #0d9488'
+                                    }}
+                                  >
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.2rem' }}>
+                                      <span className={`badge badge-${entry.category?.toLowerCase() || 'major'}`} style={{ fontSize: '0.65rem' }}>
+                                        {entry.category?.toUpperCase()}
+                                      </span>
+                                      <strong style={{ color: '#1e293b' }}>{entry.courseName}</strong>
+                                    </div>
+                                    <div style={{ color: '#64748b', fontSize: '0.7rem' }}>
+                                      {entry.roomNumber} ({entry.facultyName})
+                                    </div>
+                                  </div>
+                                ))}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         )}
 
         {activeTab === 'student' && (
-          <div className="card">
-            <h2>Personalized Student & Faculty Explorer</h2>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
-              Isolate personal student schedules for any Major + Minor elective combination or inspect faculty teaching workloads.
+          <div style={{ background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '2rem', textAlign: 'center' }}>
+            <h3 style={{ margin: 0, color: '#1e293b' }}>👥 Student & Faculty Explorer</h3>
+            <p style={{ color: '#64748b' }}>
+              Janhavi will mount the interactive department selector & faculty schedule inspector here.
             </p>
-            <div style={{ padding: '30px', textAlign: 'center', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)' }}>
-              <Users size={40} color="var(--primary-600)" style={{ marginBottom: '12px' }} />
-              <p style={{ fontWeight: 600 }}>Student & Faculty View Module Ready for Janhavi</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Janhavi connects <code>StudentTimetableView.jsx</code> and <code>FacultyTimetableView.jsx</code> here.
-              </p>
-            </div>
           </div>
         )}
 
         {activeTab === 'rooms' && (
-          <div className="card">
-            <h2>Room & Laboratory Occupancy Heatmap</h2>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
-              12 physical venues (Lecture Halls, Computer Labs, Science Labs) with real-time capacity and collision safety audits.
+          <div style={{ background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '2rem', textAlign: 'center' }}>
+            <h3 style={{ margin: 0, color: '#1e293b' }}>🚪 Room Occupancy Heatmap</h3>
+            <p style={{ color: '#64748b' }}>
+              Janhavi will mount the 12-room occupancy matrix with live heat levels here.
             </p>
-            <div style={{ padding: '30px', textAlign: 'center', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)' }}>
-              <Building size={40} color="var(--primary-600)" style={{ marginBottom: '12px' }} />
-              <p style={{ fontWeight: 600 }}>Room Heatmap Module Ready for Janhavi</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Janhavi connects <code>RoomHeatmapView.jsx</code> here.
-              </p>
-            </div>
           </div>
         )}
 
         {activeTab === 'admin' && (
-          <div className="card">
-            <h2>Admin Command Center & Live What-If Disruptor</h2>
-            <p style={{ color: 'var(--text-muted)', marginBottom: '16px' }}>
-              Configure NEP course credit baskets, trigger sub-second AI scheduling, and simulate live campus disruptions.
+          <div style={{ background: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', padding: '2rem', textAlign: 'center' }}>
+            <h3 style={{ margin: 0, color: '#1e293b' }}>⚡ Admin & What-If Disruptor</h3>
+            <p style={{ color: '#64748b' }}>
+              Tanmay will mount the emergency room lock toggles & before/after delta diff cards here.
             </p>
-            <div style={{ padding: '30px', textAlign: 'center', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)' }}>
-              <Sliders size={40} color="var(--primary-600)" style={{ marginBottom: '12px' }} />
-              <p style={{ fontWeight: 600 }}>Admin & What-If Module Ready for Tanmay</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Tanmay connects <code>AdminConfigView.jsx</code>, <code>DiagnosticDashboardView.jsx</code>, and <code>WhatIfDisruptorView.jsx</code> here.
-              </p>
-            </div>
           </div>
         )}
       </main>
 
-      {/* Footer */}
+      {/* 4. Footer Bar */}
       <footer style={{
-        marginTop: '30px',
-        paddingTop: '16px',
-        borderTop: '1px solid var(--border-color)',
+        background: '#ffffff',
+        borderTop: '1px solid #e2e8f0',
+        padding: '0.75rem 2rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontSize: '0.82rem',
-        color: 'var(--text-muted)'
+        fontSize: '0.8rem',
+        color: '#64748b'
       }}>
-        <span>Government Degree College, J&K • Smart India Hackathon SIH25091</span>
-        <span>Built with React + Deterministic MCV Constraint Engine</span>
+        <div>Government Degree College, J&K • Smart India Hackathon SIH25091</div>
+        <div>Built with React + Deterministic MCV Constraint Engine + MongoDB Atlas</div>
       </footer>
     </div>
   );
 }
+
+export default App;

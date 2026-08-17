@@ -1,7 +1,7 @@
 ﻿import mongoose from 'mongoose';
 import { getInstitutionalData, getActiveTimetableState, setActiveTimetableState } from '../config/db.js';
 import { normalizeCurriculum } from '../engine/normalizer.js';
-import { buildConflictMatrix } from '../engine/conflictMatrix.js';
+import { buildConflictMatrix, generatePairwiseConflictMatrix } from '../engine/conflictMatrix.js';
 import { solveTimetable } from '../engine/constraintSolver.js';
 import { validateTimetable } from '../engine/validator.js';
 import { calculateQualityScore } from '../engine/scorer.js';
@@ -138,6 +138,42 @@ export async function getActiveTimetableHandler(req, res) {
     res.status(500).json({
       success: false,
       message: 'Failed to retrieve active timetable',
+      error: error.message
+    });
+  }
+}
+
+export async function getConflictRadarHandler(req, res) {
+  try {
+    const collegeData = await getInstitutionalData();
+    let active = getActiveTimetableState();
+
+    if (!active) {
+      // Auto-generate if not available
+      const events = normalizeCurriculum(collegeData);
+      const conflictInfo = buildConflictMatrix(events, collegeData.cohorts);
+      const { assignments, executionTimeMs } = solveTimetable(events, collegeData, conflictInfo);
+      const validation = validateTimetable(assignments);
+      const { qualityScore, metrics } = calculateQualityScore(assignments, collegeData, validation);
+      active = {
+        timetableId: `tt_${Date.now()}`,
+        entries: assignments,
+        qualityScore,
+        metrics
+      };
+      setActiveTimetableState(active);
+    }
+
+    const radarData = generatePairwiseConflictMatrix(collegeData, active);
+
+    res.status(200).json({
+      success: true,
+      data: radarData
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to generate conflict radar matrix',
       error: error.message
     });
   }

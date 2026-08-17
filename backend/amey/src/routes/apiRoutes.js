@@ -3,6 +3,7 @@ import { getDemoData, updateConfig } from '../controllers/configController.js';
 import {
   generateTimetableHandler,
   getActiveTimetableHandler,
+  getConflictRadarHandler,
   simulateDisruptionHandler,
   commitSimulationHandler
 } from '../controllers/timetableController.js';
@@ -17,6 +18,9 @@ router.post('/config/update', updateConfig);
 // Timetable Generation & Active Schedule Routes
 router.post('/timetable/generate', generateTimetableHandler);
 router.get('/timetable/active', getActiveTimetableHandler);
+
+// Feature 1: Pre-Flight Student Clash Radar & Conflict Graph Explorer
+router.get('/conflict-radar', getConflictRadarHandler);
 
 // What-If Simulation Routes
 router.post('/timetable/simulate', simulateDisruptionHandler);
